@@ -1,0 +1,92 @@
+# Ubuntu から Cannon LBP9100C ネットワークプリンタを使う。
+
+## Canonホームページからドライバをダウンロード
+http://cweb.canon.jp/drv-upd/lasershot/linux/captlinuxx64.html
+
+ダウンロードしたファイルに含まれるドキュメントを見ながら作業を進める。
+
+### libglade2-0 をインストール
+必要なライブラリをインストールします。
+
+`sudo apt-get install libglade2-0`
+
+### プリンタドライバのインストール
+CUPSドライバ共通モジュール
+
+`sudo dpkg -i ［ファイルまでのパス］+cndrvcups-common_3.20-1_amd64.deb`
+
+プリンタドライバモジュール
+
+`sudo dpkg -i ［ファイルまでのパス］+cndrvcups-capt_2.70-1_amd64.deb`
+
+### CUPSの再起動
+`sudo /etc/init.d/cups restart`
+
+## プリントスプーラにプリンタ（PPD）を登録
+
+`sudo /usr/sbin/lpadmin -p LBP9100C -P /usr/share/cups/model/CNCUPSLBP9100CCAPTJ.ppd -v ccp://localhost:59687 -E`
+
+`sudo /usr/sbin/lpadmin -p LBP9100C_2 -P /usr/share/cups/model/CNCUPSLBP9100CCAPTJ.ppd -v ccp://localhost:59787 -E`
+
+ここで、`LBP9100`や`LBP9100_2`は登録するプリンタの名称（研究室には２台プリンタがあるので、別の名称でインストールする）。
+
+`/usr/share/cups/model/CNCUPSLBP9100CCAPTJ.ppd` はプリンタドライバ
+
+`ccp://localhost:59787` は接続に使うポート番号。
+
+
+### ccpdデーモンの設定ファイルにプリンタを登録します。
+先ほどプリントスプーラに登録した２台のプリンがを、ccpdデーモンの設定ファイルにも登録します。
+
+`sudo /usr/sbin/ccpdadmin -p LBP9100C -o net:10.249.254.48`
+
+`sudo /usr/sbin/ccpdadmin -p LBP9100C_2 -o net:10.249.254.45`
+
+ここで、`net:10.249.254.48` はネットワークプリンタのIPアドレス。
+
+以下のようにSpooler, Backend, FIFO path, Device Path　が表示されることを確認する。
+
+<img src=ccpd.png width=480pt>
+
+### ccpdデーモンを起動します。
+`sudo /etc/init.d/ccpd start`
+
+### ドライバの説明書に載っていないがUbuntuの場合に必要の作業
+参考：
+
+https://help.ubuntu.com/community/CanonCaptDrv190
+
+app-armor の例外に指定します。
+
+`sudo apt-get install apparmor-utils`
+
+`sudo aa-complain /usr/sbin/cupsd`
+
+`ldd /usr/bin/captfilter`
+
+を実行してみて、`"not a dynamic executable" or "libpopt.so.0 => not found"` と出るなら
+
+`sudo apt-get install libc6:i386 libpopt0:i386`
+
+を実行する
+
+`$ ldd /usr/bin/capt* | sort | uniq | grep "not found"`
+
+を実行してみて、何か”not found”　のものがあれば、該当するものをインストールする。
+Ubuntu 16.04の場合
+
+`$ sudo apt-get install zlib1g:i386 libxml2:i386 libstdc++6:i386`
+
+が必要だった
+
+### テストページを印刷してみる。
+うまく行くようであれば、CCPDをスタートアップに登録
+
+`sudo update-rc.d ccpd defaults`
+
+<img src=ccpd_updaterc.png width=480pt>
+
+### ステータスモニタの起動方法
+プリンタの状況（トナー残量や、エラーメッセージなど）をモニタするためには、以下のようにしてステータスモニタを起動する。
+
+`captstatusui -P LBP9100C &`

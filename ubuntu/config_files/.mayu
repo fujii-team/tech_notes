@@ -1,0 +1,59 @@
+
+include "linux109.mayu"
+
+keymap Global
+
+def key CapsLock = 0x3a
+mod control += CapsLock
+key *CapsLock = *LControl
+
+mod mod0 = !Henkan
+mod mod1 = !Muhenkan
+key M0-J = Left
+key M0-I = Up
+key M0-K = Down
+key M0-L = Right
+key M0-Space = Enter
+key M1-J = Home
+key M1-L = End
+Key M1-I = PageUp
+key M1-K = PageDown
+
+key C-Space = Backspace
+
+key S-M0-Space = S-Enter
+key S-M0-J = S-Left
+key S-M0-I = S-Up
+key S-M0-K = S-Down
+key S-M0-L = S-Right
+
+key C-M0-J = C-Left
+key C-M0-I = C-Up
+key C-M0-K = C-Down
+key C-M0-L = C-Right
+
+key C-A-I = C-A-Up
+key C-A-K = C-A-Down
+key C-A-L = C-A-Right
+key C-A-J = C-A-Left
+
+key S-C-M0-J = S-C-Left
+key S-C-M0-I = S-C-Up
+key S-C-M0-K = S-C-Down
+key S-C-M0-L = S-C-Right
+
+key S-M1-J = S-Home
+key S-M1-L = S-End
+key S-M1-K = S-PageDown
+key S-M1-I = S-PageUp
+
+key C-M1-J = C-Home
+key C-M1-L = C-End
+key C-M1-K = C-PageDown
+key C-M1-I = C-PageUp
+
+key S-C-M1-J = S-C-Home
+key S-C-M1-L = S-C-End
+key S-C-M1-K = S-C-PageUp
+key S-C-M1-I = S-C-PageDown
+

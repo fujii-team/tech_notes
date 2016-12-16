@@ -5,10 +5,10 @@ Anaconda のVirtual env環境で
 
 と言われる問題について。
 
-`conda -install mkl, mkl-service`
+`conda upgrade mkl, mkl-service -f`
 
-`conda -install numpy -f`
+`conda upgrade numpy -f`
 
-`conda -install scipy -f`
+`conda upgrade scipy -f`
 
 としたら解決した。

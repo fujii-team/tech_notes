@@ -12,5 +12,5 @@
 + [Matplotlibできれいに描画する](Python/matplotlib_hacks.md)
 
 # Mathematics
-+ [Cholesky分解の性質など](cholesky.md)
-+ [ガウス基底関数の積分公式](gaussian_basis_integration.md)
++ [Cholesky分解の性質など](mathematics/cholesky.md)
++ [ガウス基底関数の積分公式](mathematics/gaussian_basis_integration.md)

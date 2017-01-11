@@ -21,7 +21,8 @@
 > matplotlib.rcParams['mathtext.fontset'] = 'custom'  
 > matplotlib.rcParams['mathtext.rm'] = 'DejaVu Sans'  
 > matplotlib.rcParams['mathtext.it'] = 'DejaVu Sans:italic'  
-> matplotlib.rcParams['mathtext.bf'] = 'DejaVu Sans:bold'
+> matplotlib.rcParams['mathtext.bf'] = 'DejaVu Sans:bold'  
+> matplotlib.rcParams['mathtext.cursive'] = 'DejaVu Sans:oblique'
 
 
 ## 描画

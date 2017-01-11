@@ -38,7 +38,7 @@ pdfにフォントを埋め込まない場合、特に日本語の文書では�
 
 なんでもよいが、pdfファイルとソースコードを表示できるものがよい。
 
-[Atom](https://atom.io/)を進める。
+[Atom](https://atom.io/)を勧める。
 
 ### Atom の設定
 + シンタックスハイライティング： [language-latex](https://atom.io/packages/language-latex)  

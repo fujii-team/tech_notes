@@ -62,7 +62,8 @@ Atom内でpdfを表示するパッケージ。
 + 英語論文：[ソースファイル](English/manuscript.tex), [bibTeX ファイル](English/refs.bib)
 + 日本語論文：[ソースファイル](Japanese/manuscript.tex), [bibTeX ファイル](English/refs.bib)
 + 科研費：[申請書ソース配布ページ](http://osksn2.hep.sci.osaka-u.ac.jp/~taku/kakenhiLaTeX/)
-+ 概要：[日本物理学会テンプレート配布ページ](https://www.gakkai-web.net/gakkai/jps/jps_n/template.html)
++ 概要：[日本物理学会テンプレート](Japanese/JPS_texTemplate.tex)  
+なお、上記ファイルは[日本物理学会で配布されているテンプレート](https://www.gakkai-web.net/gakkai/jps/jps_n/template.html) の文字エンコードをUTF-8に変換したものである。
 
 ## 自動コンパイルの起動
 ターミナルで上記のフォルダに移動し、  

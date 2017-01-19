@@ -1,0 +1,10 @@
+# Ignore TeX temporaly files.
+*.aux
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+
+# pdf file is not suitable to track by git.
+*.pdf

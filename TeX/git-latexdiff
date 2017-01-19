@@ -174,4 +174,4 @@ latexmk
 cd $CURDIR
 cp -f $diff/*.pdf diff.pdf
 
-#rm -rf $TMPDIR
+rm -rf $TMPDIR

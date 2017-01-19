@@ -1,0 +1,177 @@
+#!/bin/bash
+# 使い方 git-latexdiff 新リポ 旧リポ
+#
+# 備考 :
+# ファイルを新しく追加したりするとうまく動かないかもしれないけど・・・
+# 日本語対応するには下記を参考にして latexdiff 変更
+# http://quickhack.net/nom/blog/2013-06-16-latexdiff-for-japanese-documents.html
+#
+# 本ファイルは
+# https://titan.ais.cmc.osaka-u.ac.jp/hashimoto/git-latexdiff/blob/master/git-latexdiff
+# を参考に一部修正したものである。
+
+# 引数チェック
+SW=0
+case $# in
+  0) SW=0;; # 最新リポジトリとの差分
+  1) SW=1;; # 指定リポジトリとの差分
+  2) SW=2;; # 引数1 と 引数2の差分
+  *) SW=-1;;
+esac
+
+if test $SW -eq -1; then
+  echo "引数が誤っています"
+fi
+
+TMPDIR=$(mktemp -d /tmp/git-latexdiff.XXXXXX)
+new=$(mktemp -d $TMPDIR/new.XXXXXX)
+old=$(mktemp -d $TMPDIR/old.XXXXXX)
+diff=$(mktemp -d $TMPDIR/diff.XXXXXX)
+
+if test $SW -eq 0; then
+  # 最新リポジトの差分を計算
+  # 最新リポジトリに追跡されていないファイルをコピー *.tex *.eps
+  for f in `git ls-files -o`
+  do
+    flag=-1
+    # texファイル
+    [ `basename $f .tex` = `basename $f` ] || {
+      flag=1
+    }
+    # epsファイル
+    [ `basename $f .eps` = `basename $f` ] || {
+      flag=1
+    }
+
+    if test $flag -eq 1; then
+      folder=`dirname $f`
+      mkdir -p $diff/$folder
+      cp -rf $f $diff/$folder/
+    fi
+  done
+
+  # 最新リポジトリのファイルと更新の有無を確認
+  for f in `git ls-files`
+  do
+    # フォルダ作成
+    folder=`dirname $f`
+    if [ ! -e $old/$folder ] && [ -d $folder ]; then
+      mkdir -p $old/$folder
+      mkdir -p $new/$folder
+      mkdir -p $diff/$folder
+    fi
+
+    #if [ `git ls-files -m $f` ]; then
+      # *.texのみ差分を取る
+      [ `basename $f .tex` = `basename $f` ] || {
+        cp $f $new/$folder/
+        fullname=`git ls-files --full-name $f`
+        git show "HEAD:$fullname" > $old/$f
+        latexdiff -e utf8 -t CFONT "$old/$f" "$new/$f" > $diff/$f
+      }
+
+      # *.texファイル以外は，diff.XXXXXXへコピー
+      [ `basename $f .tex` != `basename $f` ] || {
+        # *.pdf はコピーしない
+        [ `basename $f .pdf` != `basename $f` ] || {
+          cp $f $diff/$folder/
+        }
+      }
+
+    #else
+      # 差分をとらない
+    #  cp $f $diff/$folder/
+      #git show "HEAD:$f" > $diff/$f
+    #fi
+  done
+elif test $SW -eq 1; then
+
+  # リポジトリに追跡されていないファイルをコピー *.tex *.eps
+  for f in `git ls-files -o`
+  do
+    flag=-1
+    # texファイル
+    [ `basename $f .tex` = `basename $f` ] || {
+      flag=1
+    }
+    # epsファイル
+    [ `basename $f .eps` = `basename $f` ] || {
+      flag=1
+    }
+
+    if test $flag -eq 1; then
+      folder=`dirname $f`
+      mkdir -p $diff/$folder
+      cp -rf $f $diff/$folder/
+    fi
+  done
+
+  # 指定リポジトリのファイルと更新の有無を確認
+  for f in `git ls-files`
+  do
+    # フォルダ作成
+    folder=`dirname $f`
+    if [ ! -e $old/$folder ] && [ -d $folder ]; then
+      mkdir -p $old/$folder
+      mkdir -p $new/$folder
+      mkdir -p $diff/$folder
+    fi
+
+    [ `basename $f .tex` = `basename $f` ] || {
+      cp $f $new/$folder/
+      fullname=`git ls-files --full-name $f`
+      git show "$1:$fullname" > $old/$f
+      latexdiff -e utf8 -t CFONT "$old/$f" "$new/$f" > $diff/$f
+    }
+
+    # *.texファイル以外は，diff.XXXXXXへコピー
+    [ `basename $f .tex` != `basename $f` ] || {
+      # *.pdf はコピーしない
+      [ `basename $f .pdf` != `basename $f` ] || {
+        cp $f $diff/$folder/
+      }
+    }
+
+  done
+
+elif test $SW -eq 2; then
+  # 指定リポジトリとの差分
+  for f in `git ls-files`
+  do
+    # フォルダ作成
+
+    folder=`dirname $f`
+    mkdir -p $old/$folder
+    mkdir -p $new/$folder
+    mkdir -p $diff/$folder
+
+    fullname=`git ls-files --full-name $f`
+    git show "$1:$fullname" > $new/$f
+    git show "$2:$fullname" > $old/$f
+
+    # *.texなら差分をとる
+    [ `basename $f .tex` = `basename $f` ] || {
+      latexdiff -e utf8 -t CFONT "$old/$f" "$new/$f" > $diff/$f
+    }
+
+    # *.texファイル以外は，diff.XXXXXXへコピー
+    [ `basename $f .tex` != `basename $f` ] || {
+      # *.pdf はコピーしない
+      [ `basename $f .pdf` != `basename $f` ] || {
+      git show "$1:$fullname" > $diff/$f
+      }
+    }
+  done
+
+# latexdiff -e utf8 -t CFONT ../new.SOUmcp/02_related_works/related_works.tex ../old.owRKqm/02_related_works/related_works.tex > 02_related_works/related_works.tex
+
+fi
+
+CURDIR=$(pwd)
+cd $diff
+latexmk -C
+latexmk
+cd $CURDIR
+cp -f $diff/*.pdf diff.pdf
+
+#rm -rf $TMPDIR

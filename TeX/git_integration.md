@@ -1,18 +1,27 @@
 # Git との組み合わせ
 
-**laTeX 環境の構築**については[こちら](get_started.md)を参考のこと。
+**laTeX 環境の構築** については[こちら](get_started.md)を参考のこと。
 
 ## gitを用いてバージョン管理する。
 TeXはいろいろな中間ファイルを吐き出すので、それを無視する`.gitignore`ファイルを作成する。  
 [このファイル](gitignore)の名前を`.gitignore`に変更し、リポジトリの最上階層に保存する。  
 その他、git管理したくないファイルがあれば、同様に`.gitignore`ファイルに記述しておくとよい。
 
-## 差分をわかりやすく表示する方法
+# git-latexdiff
 laTexには`latexdiff`という差分を表示する仕組みがある。
 それを簡単に使うためのスクリプト[`git-latexdiff`](git-latexdiff)を用意した。
 
+## 環境構築
+### latexdiffのインストール
+latex ファイルの差分を抽出するlatexdiffを用いる。
+PCにインストールされていない場合は、それをインストールしておく。  
+> sudo apt-get install latexdiff
+
+### git-latexdiffの準備
 この`git-latexdiff`を[laTeX 環境の構築](get_started.md)で用意した`latexmkrc`と
 同じパスに置く。
+
+## 差分の表示
 以下のようにすると、ディレクトリ内にdiff.pdfが作成される。
 このdiff.pdfファイルには、修正前のものが小さな赤字で、修正後のものがボールドの青字で示されており、
 変更点がわかりやすくなっている。

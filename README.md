@@ -1,7 +1,4 @@
-# Read me
-
-個人的な備忘録です。
-主にPCの設定などを残しています。
+主にPCの設定などについてまとめたものです。
 
 # Ubuntu configuration
 + 研究室のネットワークプリンタLBP9100 への[接続方法](ubuntu/LBP9100.md)

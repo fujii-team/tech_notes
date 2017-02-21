@@ -19,3 +19,10 @@
 + [TeX 環境の構築](TeX/get_started.md)
 + [Git との組み合わせ](TeX/git_integration.md)
 + [文書を複数人でRebiewする](TeX/review.md)
+
+# NIFS collaboration
++ [VPN access from Ubuntu 64 bit](NIFS/f5_network.md)
+
+# Miscellaneous settings
++ [Key assign for Ubuntu](ubuntu/mayu.md)
+<!--+ [shortcut for ssh](ubuntu/ssh.md)-->

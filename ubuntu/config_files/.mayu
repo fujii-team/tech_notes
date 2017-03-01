@@ -57,3 +57,8 @@ key S-C-M1-L = S-C-End
 key S-C-M1-K = S-C-PageUp
 key S-C-M1-I = S-C-PageDown
 
+key M0-A-J = A-Left
+key M0-A-I = A-Up
+key M0-A-K = A-Down
+key M0-A-L = A-Right
+

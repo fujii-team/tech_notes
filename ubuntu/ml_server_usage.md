@@ -66,6 +66,15 @@ ML serverのホームディレクトリの内容を閲覧・変更できます�
 10.249.254.52:/ML_home/[username] /mnt/ML_home/[username] nfs rw,sync 0 0
 ```
 
+### リンクの追加
+`/mnt/ML_home/[username]` というパスが長すぎて不便な場合は、
+リンクを作成しておくと便利です。
+例えば
+```
+ln -s /mnt/ML_home/[username] ~/ml_home
+```
+とすると、ホームディレクトリ直下の`ml_home`からアクセスすることが可能になります。
+
 ## Anaconda Jupyter の設定
 ローカルマシンにインストールしたように、ML serverにもAnacondaをインストールします。
 [Anacondaのダウンロードサイト](https://www.continuum.io/downloads)から
@@ -83,6 +92,7 @@ chmod +x Anaconda3-4.3.1-Linux-x86_64.sh
 ## Jupyter-notebook server のセットアップ
 [参考](http://qiita.com/joemphilips/items/de5d12723b9b88b5b090)
 
+ML server上で
 一度 ipython を起動し、
 ```
 from notebook.auth import passwd
@@ -119,3 +129,25 @@ http://10.249.254.54:/2****
 ```
 でログインできます。
 あとはローカルのJupyter-notebookと使い方は同様です。
+
+なお、命令の末尾につける`&` はバックグラウンドで起動することを意味します。
+フォアグラウンドに持ってくるためには
+```
+fg %1
+```
+（1はジョブ番号）を実行します。
+
+# 応用的な使い方
+## 自宅・出先から ML server を利用する
+(kuins の ssh ポート転送)[http://www.iimc.kyoto-u.ac.jp/ja/services/kuins/vpn/use/sshportforward.html]を用いることで、
+自宅などから ML server 上のJupyterを操作することができます。
+
+なお、上記の Jupyter server の設定を各自のPC行っておくことで、
+同様に各自のPCも操作できます。
+
+```
+ssh -L 2****:10.249.254.54:2**** [ECS-ID/SPS-ID]@forward.kuins.kyoto-u.ac.jp
+```
+を実行して kuins にログインした後、
+ローカルのブラウザを用いて
+`localhost:2****` にアクセスするとML server 上のJupyter serverに接続できます。

@@ -11,7 +11,7 @@ homeディレクトリを共有する。
 
 > `sudo nano /etc/fstab`  
 > Add the following line in /etc/fstab  
-> 0.249.254.52:/ML_home /home nfs rw,sync 0 0  
+> 10.249.254.52:/ML_home /home nfs rw,sync 0 0  
 
 # Install Nvidia Cuda toolkit
 ([参考](http://qiita.com/tetchi821/items/614ea4ceb4c193e14c6c#cuda%E5%AF%BE%E5%BF%9C%E3%81%AEgpu%E3%81%8C%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2%E8%AA%8D%E8%AD%98%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E7%A2%BA%E8%AA%8D))
@@ -36,3 +36,14 @@ Package Manager Installation を利用する。
 sudo apt-get install ssh-server
 sudo ufr allow 22
 ```
+
+# .bashrc の変更
+各自の `.bashrc` ファイルにCuda, Cudnn へのパスを自動で追加するため
+/etc/skel/.bashrc の末尾に
+
+```
+## CUDA and cuDNN paths
+export PATH=/usr/local/cuda-8.0/bin:${PATH}
+export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:${LD_LIBRARY_PATH}
+```
+を追加する。

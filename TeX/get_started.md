@@ -2,7 +2,7 @@
 
 Ubuntu 16.04 64bit での TeX環境の構築について述べる。
 
-**[gitとの組み合わせについてはこちら](git_integration.md)**を参考にすること。
+**[gitとの組み合わせについてはこちら](git_integration.md)** を参考にすること。
 
 # ソフトウェアのインストール
 ## TeXLive のインストール
@@ -11,6 +11,11 @@ TeX のソースコードを文書へ変換するソフトウェア（コンパ�
 様々なパッケージが含まれているので、とりあえずこれをインストールしておけば十分。
 
 `sudo apt-get install texlive-lang-cjk`
+
+雑誌指定のレイアウトが含まれる texlive-publishers もインストールしておく。
+
+`sudo apt-get install texlive-publishers`
+
 
 ## pdf へのフォント埋め込み設定
 

@@ -11,6 +11,7 @@ TeX のソースコードを文書へ変換するソフトウェア（コンパ�
 様々なパッケージが含まれているので、とりあえずこれをインストールしておけば十分。
 
 `sudo apt-get install texlive-lang-cjk`
+`sudo apt-get install texlive-publishers`
 
 ## pdf へのフォント埋め込み設定
 

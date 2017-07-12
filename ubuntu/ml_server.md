@@ -4,7 +4,15 @@
 ip: 10.249.254.52
 
 # ML server
-homeディレクトリを共有する。
+## NFS client のインストール
+
+Home directory を共有するため、NFS client をインストールする。
+
+```bash
+sudo apt-get install nfs-common
+```
+
+## homeディレクトリを共有する。
 以下の元ディレクトリ
 + 10.249.254.52:/ML_home
 を `fstab` で `home` に上書き。
@@ -31,6 +39,10 @@ Package Manager Installation を利用する。
 
 を実行する。
 
+# CUDNN のインストール
+libcudnn を /usr/cuda-8.0 ...  にコピーする
+
+
 # SSH server のインストール
 ```
 sudo apt-get install ssh-server
@@ -47,3 +59,15 @@ export PATH=/usr/local/cuda-8.0/bin:${PATH}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:${LD_LIBRARY_PATH}
 ```
 を追加する。
+
+ユーザ追加時に`.bashrc`に上記が自動的に追加されるよう、
+`/etc/skel/.bashrc` ファイル末尾に上記を記述しておく。
+
+# ユーザの追加
+ホームディレクトリは共通だた、ユーザはそれぞれのサーバごとに追加する必要がある。  
+追加する際、既存のサーバでの `uid`、ユーザ名が一致するように注意する。
+
+# Monitoring tool munin のインストール
+```
+sudo apt-get install munin-node
+```

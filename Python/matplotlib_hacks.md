@@ -7,23 +7,20 @@
 
 
 ## インポート
-> import matplotlib.pyplt as plt  
-> import matplotlib  
-> import seaborn as sns
+```python
+import seaborn as sns
+sns.set_context("paper", 2.5, {"lines.linewidth": 1.5, "lines.markersize": 7})
+sns.set_style('ticks')
 
-## コンテキストの設定
-> sns.set_context('poster')  
-> sns.set_style('ticks')
+import matplotlib
 
-## フォントの設定
-
-> fontprop = matplotlib.font_manager.FontProperties(fname="/usr/share/fonts/truetype/ttf-dejavu//")  
-> matplotlib.rcParams['mathtext.fontset'] = 'custom'  
-> matplotlib.rcParams['mathtext.rm'] = 'DejaVu Sans'  
-> matplotlib.rcParams['mathtext.it'] = 'DejaVu Sans:italic'  
-> matplotlib.rcParams['mathtext.bf'] = 'DejaVu Sans:bold'  
-> matplotlib.rcParams['mathtext.cursive'] = 'DejaVu Sans:oblique'
-
+fontprop = matplotlib.font_manager.FontProperties(fname="/usr/share/fonts/truetype/ttf-dejavu//")
+matplotlib.rcParams['mathtext.fontset'] = 'custom'
+matplotlib.rcParams['mathtext.rm'] = 'DejaVu Sans'
+matplotlib.rcParams['mathtext.it'] = 'DejaVu Sans:italic'
+matplotlib.rcParams['mathtext.bf'] = 'DejaVu Sans:bold'
+matplotlib.rcParams['mathtext.cal'] = 'DejaVu Sans:oblique'
+```
 
 ## 描画
 > plt.plot(x, y)

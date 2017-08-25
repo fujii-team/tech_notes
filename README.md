@@ -23,7 +23,8 @@
 + [文書を複数人でRebiewする](TeX/review.md)
 
 # 研究室ネットワーク関係
-+ [機会学習用GPUサーバー使用法](ubuntu/ml_server_usage.md)
++ [データサーバのマウント方法](ubuntu/nfs_server_mount.md)
++ [機械学習用GPUサーバー使用法](ubuntu/ml_server_usage.md)
 + [kuins ネットワークへのsshアクセス](network/ssh)
 
 # NIFS collaboration

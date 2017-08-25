@@ -19,12 +19,13 @@ sudo mount -t nfs 10.249.254.52:/ML_home/public /mnt/ML_home/public
 ML serverのホームディレクトリの内容を閲覧・変更できます。
 
 なお、上記のマウントコマンドはPCの再起動によりリセットされます。
-永続的にマウントさせるために、
-`/etc/fstab` を編集します。このファイルはrootによる制限がかかっているため、ターミナルから以下のコマンドを入力し、root権限でファイルマネージャを開きます。
+永続的にマウントさせるために、`/etc/fstab` を編集します。
+このファイルはrootによる制限がかかっているため、
+以下のコマンドにより、root権限でテキストエディタgeditを開きます。
 ```
-sudo nautilus
+sudo gedit /etc/fstab
 ```
-開いたファイルマネージャから`/etc/fstab` を開き、その最終行に以下を追加します。
+開いたファイルの最終行に以下を追加し、保存します。
 ```
 # nfs home directory
 10.249.254.52:/ML_home/public /mnt/ML_home/public nfs rw,sync 0 0

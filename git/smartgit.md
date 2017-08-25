@@ -11,6 +11,11 @@ http://www.find-job.net/startup/7-git-slides
 
 など、仕組みや使い方を調べておくこと。
 
+まず、gitをインストールする。
+```bash
+sudo apt-get install git
+```
+
 **git** は基本的にコマンドラインで実行するソフトウェアだが、直感的でないので、
 GUIアプリケーションであるSmartGitを導入する。
 

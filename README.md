@@ -26,6 +26,7 @@
 + [データサーバのマウント方法](ubuntu/nfs_server_mount.md)
 + [機械学習用GPUサーバー使用法](ubuntu/ml_server_usage.md)
 + [kuins ネットワークへのsshアクセス](network/ssh)
++ [cuDNN5 から cuDNN6 へのアップデート](ubuntu/cuDNN_update.md)
 
 # NIFS collaboration
 + [VPN access from Ubuntu 64 bit](NIFS/f5_network.md)

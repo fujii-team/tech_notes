@@ -27,6 +27,9 @@
 + [機械学習用GPUサーバー使用法](ubuntu/ml_server_usage.md)
 + [kuins ネットワークへのsshアクセス](network/ssh)
 
+# 研究室ネットワーク（管理者向け）
++ [cuDNN5 から cuDNN6 へのアップデート](ubuntu/cuDNN_update.md)
+
 # NIFS collaboration
 + [VPN access from Ubuntu 64 bit](NIFS/f5_network.md)
 

@@ -32,3 +32,7 @@ sudo dpkg -i libcudnn6-dev_6.0*+cuda8.0_amd64.deb
 # Install code samples and user guide
 sudo dpkg -i libcudnn6-doc_6.0*+cuda8.0_amd64.deb
 ```
+その後、以下のコマンドで再起動する。
+```
+sudo shutdown -r now
+```

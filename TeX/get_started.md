@@ -11,7 +11,6 @@ TeX のソースコードを文書へ変換するソフトウェア（コンパ�
 様々なパッケージが含まれているので、とりあえずこれをインストールしておけば十分。
 
 `sudo apt-get install texlive-lang-cjk`
-`sudo apt-get install texlive-publishers`
 
 雑誌指定のレイアウトが含まれる texlive-publishers もインストールしておく。
 

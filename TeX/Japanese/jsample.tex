@@ -1,0 +1,432 @@
+\documentclass{jspf}            % プラズマ・核融合学会誌
+\usepackage{graphicx}           % 図をインクルードする
+\usepackage{amsmath}            % AMS-LaTeXを使う
+\usepackage{amssymb}            % TXフォントの場合は不要
+%\usepackage{txfonts}           % TXフォント（Times/Helvetica）を使う
+%\renewcommand{\ttdefault}{cmtt}% TXフォントの際の等幅フォントの設定
+\usepackage{url}                % \url{...}マクロを使う
+\begin{document}                % 始まり
+
+% 和文タイトル（途中の改行は \\ で）
+
+\title{実験室における合体プラズマの二次元MHDシミュレーション \\
+  ——その動的振る舞いについて——}
+
+% 和文著者
+
+\author{渡辺智彦，林　隆也，佐藤哲也 \\
+  核融合科学研究所 理論・シミュレーション研究センター}
+
+% 欧文タイトル
+
+\etitle{Two-Dimensional MHD Simulation of Merging Plasmas
+  in Laboratory Experiments: Focussing on Its Dynamic Behaviors}
+
+% 欧文著者
+
+\eauthor{WATANABE Tomo-Hiko, HAYASHI Takaya and SATO Tetsuya \\
+  Theory and Computer Simulation Center,
+  National Institute for Fusion Science, \\
+  Toki, Gifu 509--5292, Japan}
+
+% 日付
+
+\date{(Received 27 January 1999 / Accepted 13 May 1999)}
+
+% アブストラクト
+
+\begin{abstract}
+  Computer animations resulted from
+  two-dimensional magnetohydrodynamic simulations of plasma merging have
+  reproduced dynamic behaviors found in laboratory experiments. Specifically,
+  the following features have been clearly shown, that is, 1) formation process
+  of pressure profile by an induced plasma flow during counter-helicity merging
+  of spheromaks, 2) topology change of field lines and their toroidal motion,
+  and 3) magnetic island formation in a diffusion region during co-helicity
+  injection.
+\end{abstract}
+
+% キーワード
+
+\keywords{magnetohydrodynamics, magnetic reconnection, simulation, spheromak, FRC}
+
+% 主著者のメールアドレス（_ や % もそのまま書けます）
+
+\AuthorsEmail{tomo@nifs.ac.jp}
+
+% セクション見出し
+
+\section{はじめに}
+
+% 本文
+
+核融合プラズマをはじめ，
+宇宙空間および天体プラズマで見られるような，
+磁気流体（MHD）方程式で記述され得るさまざまな巨視的プラズマ現象において，
+磁気リコネクションが重要な素過程であることが認識されて久しい~[1--3]．
+中でも，磁気リコネクションによって磁力線のトポロジーが変えられるために，
+トポロジーの異なる最小磁気エネルギー状態へ磁場配位が緩和できること，また，
+リコネクションに伴って磁気エネルギーからプラズマの熱および運動エネルギー
+への変換が起こること，等が指摘されている（例えば文献~[4--6]）．
+これらは非線形磁気流体現象を考察する際の重要な指針となっている．
+
+実験室における磁気リコネクションの例としては，
+トカマクでの鋸歯状振動現象が古くから知られているが，
+磁気リコネクションの物理機構の解明を主目的とした実験は意外と少なく，
+Yamada，Ono等による一連のプラズマ合体を用いた実験~[7--11] が近年注目を集めている．
+TS-3（the Tokyo University Spherical Torus No.~3）装置を用いた実験では~[7, 8]，
+二つの同一のスフェロマックを合体させる同極性合体の結果，
+初期のスフェロマックのもつポロイダル磁場同士がつなぎ変わり，
+単一のスフェロマックが形成された．
+一方，反平行のトロイダル磁場を持つスフェロマックを合体させる逆極性合体では，
+ポロイダル磁場がつなぎ変わるだけでなく，双方のトロイダル磁場が打ち消し合って，
+磁場反転配位（FRC）が形成された．
+この時，トロイダル磁場のエネルギーが最終的にはプラズマの熱エネルギーに変換されるため，
+効率的なプラズマ加熱が起こる．
+
+一方，磁気リコネクションを伴う強い非線形現象を理論的に解明するために，
+1970年代後半から数多くの計算機シミュレーションが行われてきた~[2, 3]．
+特に，プラズマ合体実験と似通った磁場配位をもちいて，
+以前から磁気島合体のシミュレーションが行われており~[3, 12]，
+現在でもさらに高精度の解法が試みられている~[13]．
+これらのシミュレーションでは，リコネクション率の抵抗依存性，
+散逸領域の形状，
+リコネクションに伴うジェットの形成などに焦点があてられ様々な結果が得られている．
+しかし，実験の進展に伴い，
+実験により即した配位でプラズマ合体とそれに伴う磁気リコネクション過程を
+理論的に検証することが必要となった．
+そこで我々は，
+TS-3装置の実験で見られたスフェロマックの合体過程をMHDシミュレーションによって再現し，
+その合体機構の解明を試みた~[11, 14, 15]．
+シミュレーションにおいても実験と同様に，
+同極性および逆極性合体の結果，それぞれスフェロマックとFRCが形成された．
+また，実験でも示唆されているように，
+逆極性合体で結合した磁力線がトロイダル方向の強いプラズマ流を生み出しながら
+振動する現象が見られた．
+
+しかし，合体に要する時間は同極性と逆極性の場合で同程度であり，
+逆極性合体が3倍ほど速く進行するという実験結果は再現できていない．
+これは，逆極性合体の場合MHDモデルでは取り扱えない，
+二流体効果や粒子運動論的効果が働いているため，と考えられている．
+TS-3実験の結果を踏まえて，
+さらに磁気リコネクションの物理過程のみに焦点をあてた実験が，
+プリンストン大学プラズマ物理研究所のMRX（Magnetic Reconnection Experiment）
+装置を用いて行われている~[9--11]．
+MRX装置は真空容器内に一対のフラックスコアコイルを持ち，
+プラズマ中のトロイダル・ポロイダル両磁場成分を変化させることができる．
+主にポロイダルコイル電流を減少させて，
+セパラトリックス点を経てコイルに向かうプラズマ流を誘起し，
+リコネクションを起こす実験をpullモードと言い，
+その逆をpushモードと呼ぶ．
+MRXの初期の実験では，pullモードで，かつ，
+二つのフラックスコアコイルから反平行のトロイダル磁場を与える
+（counter-helicity injection）オペレーションを行った場合には，
+リコネクションが駆動されるとともにY字型の電流層が形成された．
+一方，平行なトロイダル磁場を与えるco-helicity injectionでは，
+コイルの間にO点を持つ磁気島が形成されるという結果が得られた．
+最近我々は，この現象を解明するためにMRX配位でのTaylor解の解析
+およびMHDシミュレーションを行った~[16, 17]．その結果，co-helicity
+injectionの場合には，磁気島を持つ解と持たない解がともにTaylor解の
+最小エネルギー状態を表すブランチ上に存在し，
+磁気ヘリシティの増加に伴って磁気島を持つ解へと平衡配位が遷移することで
+実験結果が説明されることが示された~[16]．
+また，counter-helicityの場合には，
+最小エネルギー状態で磁気島を持つTaylor解が存在しないことから，
+磁気島は発生せずに電流層が形成されると理解できる．
+さらに，pushモードでは無次元化された磁気ヘリシティが減少していくため，
+配位は真空解に近づいていき，磁気島は形成され得ないことも指摘されている~[17]．
+
+本論文で，我々は，上述のTS-3およびMRX実験を対象としたMHDシミュレーションで
+得られた動画像をそれぞれ2節および3節で紹介し，
+磁気リコネクション実験に伴って現れる動的現象について考察する．
+主な結果は文献~[15, 16] に詳述されているが，
+それらを動画像として表現することで，
+読者にはより直截的な現象の理解が可能となるであろう．
+2.1および3.1節では，TS-3，MRX，それぞれを対象としたシミュレーションモデルを示し，
+3.2節でMRX配位でのTaylor解について述べる．
+そして，2.2節ではスフェロマック合体の，
+3.3節ではMRXのシミュレーション結果を示し，最後に結果をまとめる．
+
+\section{スフェロマック合体のシミュレーション}
+
+\subsection{シミュレーションモデル}
+
+ここでは，完全導体壁で覆われた円筒状のシミュレーション領域を設定し，
+軸対称性を仮定して二次元のポロイダル面内で計算を行なう．
+TS-3実験では傾斜モードなどの成長を抑えて対称性のよい合体が実現されている．
+一方で，理想MHDモデルでは，FRCやスフェロマックなどのコンパクトな配位が，
+傾斜モードやシフトモードに対し不安定になりやすいことが知られている．
+ここでは，それらのモードとプラズマ合体の競合過程よりも，
+むしろ合体の物理過程そのものに焦点をあてるために二次元の仮定を用いている．
+
+シミュレーションを行う円筒の半径を1として長さの単位に取り，$z$
+方向の長さをその4倍に設定した（Fig.~1参照）．
+このポロイダル面を $r$ 方向289，$z$ 方向1153の一様な空間格子に分割し，
+空間微分には二次の中心差分，
+時間積分には四次のRunge-Kutta-Gill法を用いてシミュレーションを行った．
+また，密度を1として一様におき，
+初期のトロイダル磁場の最大値が1.1となるように無次元化を行った．
+初期磁場配位は，半径0.5のHillの球形渦で表された $z = \pm 0.75$
+に中心をもつ二つのスフェロマックと，それらを包む外部磁場で与えられる．
+初期条件の詳細は文献~[15] を参照されたい．解くべき支配方程式は以下のとおりである．
+\begin{equation}
+  \frac{\partial\rho}{\partial t} = -\nabla\cdot(\rho\boldsymbol{v})
+\end{equation}
+\begin{equation}
+  \rho\frac{d\boldsymbol{v}}{dt} =
+  - \nabla p + \boldsymbol{j} \times \boldsymbol{B}
+  + \boldsymbol{v} \left[\nabla^2\boldsymbol{v}
+    + \frac{1}{3}\nabla(\nabla\cdot\boldsymbol{v}) \right]
+\end{equation}
+\begin{equation}
+  \frac{1}{\gamma-1}\frac{dp}{dt} =
+  -\frac{\gamma}{\gamma-1}p\nabla\cdot\boldsymbol{v}
+  +\eta j^2 + \Phi
+\end{equation}
+\begin{equation}
+  \frac{\partial\boldsymbol{B}}{\partial t} =
+  - \nabla\times\boldsymbol{E}
+\end{equation}
+
+ここで，$j$，$E$，$\Phi$，$e_{ij}$ は次式で与えられる．
+\begin{gather}
+  \boldsymbol{j} = \nabla\times\boldsymbol{B} \\
+  \boldsymbol{E} = -\boldsymbol{v} \times \boldsymbol{B}
+  + \eta \boldsymbol{j} \\
+  \Phi = 2v\left[
+    e_{ij}e_{ij} - \frac{1}{3}(\nabla\cdot\boldsymbol{v})^2\right] \\
+  e_{ij} = \frac{1}{2}\left(
+    \frac{\partial v_i}{\partial x_j} +
+    \frac{\partial v_j}{\partial x_i} \right)
+\end{gather}
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+\section{あいうえおかきくけこ}
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+\section{さしすせそたちつてと}
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
+
+\begin{thebibliography}{99}
+\bibitem{Ertl}
+  M.~E. Ertl, G.~R. Pfister, and H.~J. Goldsmid,
+  ``Size dependence of the magneto-Seebeck effect in bismuth-antimony
+  alloys,''
+  Brit.\ J.\ Appl.\ Phys.\ \textbf{14}, 161--162 (1963).
+\bibitem{Goldsmid}
+  H.~J. Goldsmid, \textit{Electronic Refrigeration}
+  (Pion Limited, 1986).
+\bibitem{HH62}
+  T. C. Harman and J. M. Honig,
+  ``Theory of galvano-thermomagnetic energy conversion devices.
+  I. Generators,''
+  \textit{Journal of Applied Physics} \textbf{33} (1962),
+  3178--3188.
+\bibitem{HH67}
+  T. C. Harman and J. M. Honig,
+  \textit{Thermoelectric and Thermomagnetic Effects and Applications}
+  (McGraw-Hill, 1967).
+\bibitem{Hasegawa99}
+  Y.~Hasegawa, H.~Okumura, N.~Kondo, N.~Shuto, S.~Yamaguchi, and N.~Sato,
+  ``Shape effect of magnetoresistance and thermoelectric power for BiSb,''
+  ICT99, Baltimore, U.S. (1999).
+\bibitem{Ibach}
+  H. イバッハ, H. リュート『固体物理学: 新世紀物質科学への基礎』
+  （石井力，木村忠正訳，シュプリンガー・フェアラーク東京，1998）
+  原著:\
+  Harald Ibach and Hans L\"{u}th,
+  \textit{Solid-State Physics:\
+    An Introduction to Principles of Materials Science}
+  (Springer, 1995).
+\bibitem{Ikeda96}
+  K.~Ikeda, H.~Nakamura, S.~Yamaguchi, and K.~Kuroda,
+  ``Measurement of transport properties of thermoelectric materials
+  in the magnetic field,''
+  J.\ Adv.\ Sci., \textbf{8} (1996), 147-- (in Japanese).
+\bibitem{Ikeda97}
+  K.~Ikeda, H.~Nakamura, and S.~Yamaguchi,
+  ``Geometric contribution to the measurement of thermoelectric power
+  and Nernst coefficient in a strong magnetic field,''
+  ICT97, Dresden, Germany (1997);
+  \url{http://xxx.lanl.gov/abs/cond-mat/9709152} (1997).
+\bibitem{Jain59}
+  A. L. Jain, \textit{Phys.\ Rev.}\ \textbf{114}, 1518 (1959).
+\bibitem{Kamimura}
+  上村 洸，中尾憲司『電子物性論』（培風館，
+  1995）
+\bibitem{Kane57}
+  E.~O. Kane, ``Band structure of Indium Antimonide,''
+  Journal of the Physics and Chemistry of Solids,
+  \textbf{1} (1957), 249--261.
+\bibitem{KittelTP}
+  Charles Kittel and Herbert Kroemer,
+  \textit{Thermal Physics}, second edition
+  (W. H. Freeman, 1980).
+\bibitem{Kubo}
+  久保亮五編『大学演習 熱学・統計力学』（裳華房，1961年）
+  ［1998年に修訂版が出たが本質的に変わりはない］
+\bibitem{LL}
+  L. D. Landau, E. M. Lifshitz and L. P. Pitaevski\u{\i},
+  \textit{Electrodynamics of Continuous Media}, 2nd ed.,
+  Pergamon, 1984 (Reprinted by Butterworth-Heinemann).
+\bibitem{LP}
+  Lifshitz and Pitaevski\u{\i},
+  \textit{Physical Kinetics},
+  Pergamon, 1981 (Reprinted by Butterworth-Heinemann).
+\bibitem{Mikoshiba}
+  御子柴宣夫『半導体の物理』改訂版（西澤潤一編，培風館，1991年）
+\bibitem{Nakamura96}
+  H.~Nakamura, K.~Ikeda, S.~Yamaguchi, and K.~Kuroda,
+  ``Transport coefficients of thermoelectric semiconductor InSb:\
+  A candidate for the Nernst element,''
+  Journal of Advanced Science, \textbf{8}, 153--157 (1996),
+  in Japanese
+  （「ネルンスト素子の候補としてのInSb熱電半導体の輸送係数」）
+\bibitem{Nakamura97}
+  H.~Nakamura, K.~Ikeda, and S.~Yamaguchi,
+  ``Transport coefficients of InSb in a strong magnetic field,''
+  ICT97, Dresden, Germany (1997);
+  \url{http://xxx.lanl.gov/abs/cond-mat/9709188} (1997).
+\bibitem{Nakamura97j}
+  中村浩章，池田一昭，山口作太郎
+  「強磁場中でのネルンスト素子の輸送現象とエネルギー変換」
+  日本金属学会誌，\textbf{61}, 1318--1325 (1997)
+  (H.~Nakamura, K.~Ikeda, and S.~Yamaguchi,
+  ``Transport property and energy conversion of Nernst elements
+  in strong magnetic field,''
+  J.\ Japan Inst.\ Metals, \textbf{61}, 1318--1325 (1997), in Japanese)
+\bibitem{Nakamura98}
+  H.~Nakamura, K.~Ikeda, and S.~Yamaguchi,
+  ``Physical models of Nernst element,''
+  \textit{Proceedings of ICT98:
+  17th International Conference of Thermoelectrics,
+  Nagoya, Japan, May 24--28, 1998} (IEEE, 1998), 97--100;
+  \url{http://xxx.lanl.gov/abs/cond-mat/9806296} (1998).
+\bibitem{Okumura97}
+  H.~Okumura and S.~Yamaguchi,
+  ``One dimensional simulation for Peltier current leads,''
+  \textit{IEEE Transactions on Applied Superconductivity},
+  \textbf{7} (1997), 715--718.
+\bibitem{Okumura98}
+  H.~Okumura, S.~Yamaguchi, H.~Nakamura, K.~Ikeda, and K.~Sawada,
+  ``Numerical computation of thermoelectric and thermomagnetic effects,''
+  \textit{Proceedings of ICT98:
+    17th International Conference of Thermoelectrics,
+    Nagoya, Japan, May 24--28, 1998} (IEEE, 1998), 89--92;
+  \url{http://xxx.lanl.gov/abs/cond-mat/9806042} (1998).
+\bibitem{Okumura99}
+  H.~Okumura, Y.~Hasegawa, H.~Nakamura, and S.~Yamaguchi,
+  ``A computational model of thermoelectric and thermomagnetic semiconductors,''
+  \textit{Proceedings of ICT99:
+    18th International Conference of Thermoelectrics,
+    Baltimore, MD, August 29--September 2, 1999}, to appear.
+\bibitem{Rowe}
+  D.~M. Rowe, ed., \textit{CRC Handbook of Thermoelectrics},
+  Florida: CRC Press, 1995.
+\bibitem{Sakurai97}
+  M.~Sakurai, I.~Yoshida, S.~Tanuma, S.~Yamaguchi,
+  K.~Matushita, H.~Nakamura, T.~Sato, K.~Koumoto,
+  ``Peltier current lead experiment under 77K,''
+  \textit{Proceedings of ICT98:
+  17th International Conference of Thermoelectrics,
+  Nagoya, Japan, May 24--28, 1998} (IEEE, 1998), 498--501.
+\bibitem{Seeger}
+  K.~Seeger, \textit{Semiconductor Physics:\ An Introduction},
+  sixth edition (Springer, 1996).
+\bibitem{Tanuma96}
+  S. Tanuma and M. Sakurai,
+  ``Magnetic field dependence of thermomagnetic effect of
+  Bi$_{88}$Sb$_{12}$ alloy'',
+  \textit{Journal of Advanced Science} \textbf{7}, 163--167 (1996).
+\bibitem{Ueda}
+  K.~Ueda,
+  Technological aspects and recent advances in HTS current lead,
+  \textit{Cryogenic Engineering}, vol.~30, pp.~552--559, December 1995
+  (in Japanese).
+\bibitem{WelkerWeiss}
+  H.~Welker and H.~Weiss, Z.~Phisik \textbf{138}, 322 (1954).
+\bibitem{Wilson}
+  M.~N. Wilson, \textit{Superconducting Magnets},
+  Oxford: Oxford University Press, 1983.
+\bibitem{Yamaguchi94}
+  S.~Yamaguchi, A.~Iiyoshi, O.~Motojima, M.~Okamoto,
+  S.~Sudo, M.~Ohnishi, M.~Onozuka, and C.~Uesono,
+  Direct energy conversion of radiation energy in fusion energy,
+  \textit{Proc.\ 7th Int.\ Conf.\ Emerging Nucl.\ Energy Systems},
+  502 (1994).
+\bibitem{Yamaguchi96}
+  S.~Yamaguchi, A proposal for a Peltier current lead,
+  16th International Cryogenic Engineering Conference,
+  May 1996.
+\bibitem{Yamaguchi97}
+  S.~Yamaguchi, H.~Nakamura, K.~Ikeda, T.~Sakurai, I.~Yoshida,
+  S.~Tanuma, S.~Tobise, K.~Koumoto, H.~Okumura,
+  ``Peltier current lead experiments with a thermoelectric semiconductor
+  near 77~K''
+  (MT-15, Beijin, China, 1997);
+  \url{http://xxx.lanl.gov/abs/cond-mat/9711042} (1997).
+\bibitem{Yim72}
+  W.~M. Yim and A.~Amith,
+  ``Bi-Sb alloys for magneto-thermoelectric and thermomagnetic
+  cooling,''
+  \textit{Solid-State Electronics} \textbf{15}, 1141--1165 (1972).
+\bibitem{Mahan96}
+  G. D. Mahan and J. O. Sofo, ``The best thermoelectric,''
+  \textit{Proc. Natl. Acad. Sci.} \textbf{93}, 7436--7439 (1996)
+\bibitem{Bies98}
+  W. E. Bies, R. J. Radtke, H. Ehrenreich,
+  Thermoelectric properties of anisotropic systems,
+  arXiv:cond-mat/9812084 (submitted to Phys. Rev.\ B)
+\end{thebibliography}
+
+\end{document}

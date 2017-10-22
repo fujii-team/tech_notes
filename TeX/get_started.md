@@ -72,6 +72,9 @@ Atom内でpdfを表示するパッケージ。
 + 概要：[日本物理学会テンプレート](Japanese/JPS_texTemplate.tex)  
 なお、上記ファイルは[日本物理学会で配布されているテンプレート](https://www.gakkai-web.net/gakkai/jps/jps_n/template.html) の文字エンコードをUTF-8に変換したものである。
 
+## TeXサンプルファイル
+これまで用いたTeXのサンプルファイルは [samples](samples) ディレクトリにまとめておく。
+
 ## 自動コンパイルの起動
 ターミナルで上記のフォルダに移動し、  
 `latexmk -pvc`  

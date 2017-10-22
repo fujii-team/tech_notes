@@ -5,7 +5,7 @@
 %% Author: Haruhiko Okumura <okumura@edu.mie-u.ac.jp>
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{plasma2017}[2005/11/24 PFR]
+% \ProvidesPackage{plasma2017}[2005/11/24 PFR]
 
 \renewcommand\normalsize{%
 %%% NOTE: text lines are separated by 4.48mm.
@@ -101,11 +101,11 @@
   \newpage\null
   \begin{center}
     \let\footnote\thanks
-    \def\sup##1{$^{##1)}$}
+    \def\sup##1{$^{##1}$}
     \ifx\@title\@undefined\else
       {\Large\bfseries\@title\par}\fi
     \ifx\@jtitle\@undefined\else
-      {\Large\bfseries\@jtitle\par}\fi
+      {\Large\@jtitle\par}\fi
 %%% NOTE: separation between title and author
     \vskip 12pt
     \ifx\@author\@undefined\else
@@ -147,7 +147,7 @@
 \renewenvironment{abstract}{%
   \global\setbox\@abstractbox\hbox\bgroup
 %%% NOTE: abstract width is 158mm, indent is 6.5mm
-  \begin{minipage}{158mm}\parindent6.5mm\relax}%
+  \begin{minipage}{148mm}\parindent6.5mm\relax}%
   {\end{minipage}\egroup}
 
 \renewcommand\section{\@startsection {section}{1}{\z@}%

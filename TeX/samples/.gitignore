@@ -1,0 +1,14 @@
+# Ignore pdf files in this folder
+*.pdf
+
+# Ignore the diff folder
+diff
+
+# Ignore TeX temporaly files.
+*.aux
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+

@@ -11,4 +11,7 @@ diff
 *.fls
 *.log
 *.gz
-
+*.out
+*Notes.bib
+*.blg
+*.bbl

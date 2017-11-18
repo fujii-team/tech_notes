@@ -1,0 +1,47 @@
+\documentclass[a4paper,10pt,onecolumn,oneside,openany]{jsbook}% preamble:
+\usepackage[dvipdfmx]{graphicx} % Include figure files
+\usepackage{verbatim}   % useful for program listings
+\usepackage[dvipdfmx]{color}      % use if color is used in text
+\usepackage{caption}
+\usepackage{cite}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{amsmath,amssymb}
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+\begin{document}
+
+\title{日本語論文のTeXファイル}
+
+\author{藤井 恵介}
+
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+  \section*{摘要}
+ここに摘要を書く
+あ
+
+あ
+
+あ
+\end{abstract}
+
+\tableofcontents % 目次が出現
+
+% introduction.tex is included
+\input{introduction}
+
+
+\chapter{まとめ}
+まとめはここに書く
+
+\chapter*{謝辞}
+謝辞はここに書く
+
+\bibliographystyle{jplain}
+\bibliography{refs}
+
+\end{document}

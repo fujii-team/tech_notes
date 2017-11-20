@@ -20,6 +20,7 @@
 # TeX
 + [TeX 環境の構築](TeX/get_started.md)
 + [Git との組み合わせ](TeX/git_integration.md)
++ [論文をTeXで書く](TeX/ronbun.md)
 + [文書を複数人でRebiewする](TeX/review.md)
 
 # 研究室ネットワーク関係

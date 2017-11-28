@@ -27,6 +27,7 @@
 + [データサーバのマウント方法](ubuntu/nfs_server_mount.md)
 + [機械学習用GPUサーバー使用法](ubuntu/ml_server_usage.md)
 + [kuins ネットワークへのsshアクセス](network/ssh)
++ [サーバとローカルマシンのユーザIDが異なる場合の対処方法](ubuntu/change_user_id.md)
 
 # 研究室ネットワーク（管理者向け）
 + [cuDNN5 から cuDNN6 へのアップデート](ubuntu/cuDNN_update.md)

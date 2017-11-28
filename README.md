@@ -8,7 +8,7 @@
 + 研究室のネットワークプリンタLBP9100 への[接続方法](ubuntu/LBP9100.md)
 + スキャナ scansnap s1300i に[接続する方法](ubuntu/scansnap_s1300i.md)
 + 統合エディタ[Atom のカスタマイズ](ubuntu/atom.md)
-+ [バックアップの方法](ubuntu/backup.md)
++ [自動バックアップの設定方法](ubuntu/backup.md)
 
 # Python configuration
 + [インストール時のエラーなどについて](Python/issues.md)

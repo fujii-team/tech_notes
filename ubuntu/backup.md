@@ -2,7 +2,7 @@
 
 システム設定→バックアップ→
 
-![scr_shot_1](/home/yuta/Pictures/Screenshot from 2017-11-09 02-54-22.png)
+![scr_shot_1](./backup_2.png)
 
 
 1,→概要：  
@@ -20,4 +20,4 @@
 
 バックアップが成功すると以下のような画面が出る
 
-![scr_shot_2](/home/yuta/Pictures/Screenshot from 2017-11-09 03-07-37.png)
+![scr_shot_2](./backup_1.png)

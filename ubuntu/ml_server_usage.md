@@ -63,6 +63,14 @@ ln -s /mnt/ML_home/[username] ~/ml_home
 とすると、ホームディレクトリ直下の`ml_home`からアクセスすることが可能になります。
 
 
+### 共有した homeディレクトリにローカルマシンからアクセスできるようにする
+先ほど作成した共有ディレクトリに、
+```
+cd /mnt/ML_home/[username]
+```
+で移動すると、permission denied される場合がある。その場合、[ローカルマシンでのユーザIDの変更](./change_user_id.md)を行う。
+
+
 # ML server の使い方
 ## ログイン
 基本的には ssh でログインしてください。

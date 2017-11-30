@@ -38,8 +38,7 @@ uid=1000([username]) gid=1000([username]) groups=1000([username]) （以下略�
 まず、ユーザをダミーグループに移す。
 ```
 sudo groupadd -g 2000 tmpgroup   # ダミーのグループ作成
-sudo usermod -g tmpgroup   # ユーザのグループをダミーに
-
+sudo usermod -g tmpgroup [username]   # ユーザのグループをダミーに
 ```
 gidが変更されたことを確認する。
 ```
@@ -68,7 +67,7 @@ id [username]   # id確認
 idが上記のようになっていれば成功である。成功であれば、[本ページ最終節](#final_check)で動作確認を行う。「user ... is currently used by process ...」のようなエラーが出た場合は、次節の操作を行う。
 
 
-## uidの変更に失敗する場合 
+## uidの変更に失敗する場合
 まず、次のコマンドで新しいユーザを作成する。
 ```
 sudo adduser test

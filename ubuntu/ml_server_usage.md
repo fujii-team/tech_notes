@@ -36,13 +36,13 @@ sudo apt-get install nfs-common
 
 その後、以下のコマンドでML serverのディレクトリを共有できます。
 ```
-sudo mkdir /mnt/ML_home/[username]
-sudo mount -t nfs 10.249.254.52:/ML_home/[username] /mnt/ML_home/[username]
+sudo mkdir /media/[username]/ML_home/[username]
+sudo mount -t nfs 10.249.254.52:/ML_home/[username] /media/[username]/ML_home/[username]
 ```
 ここで、`10.249.254.52:/ML_home/[username]` はNFSサーバ内のアドレスで、
-`/mnt/ML_home/[username]` は、ローカルマシンのアドレスです。
+`/media/[username]/ML_home/[username]` は、ローカルマシンのアドレスです。
 
-上記コマンドが成功すると、ローカルマシンの`/mnt/ML_home/[username]`にアクセスすることで、
+上記コマンドが成功すると、ローカルマシンの`/media/[username]/ML_home/[username]`にアクセスすることで、
 ML serverのホームディレクトリの内容を閲覧・変更できます。
 
 なお、上記のマウントコマンドはPCの再起動によりリセットされます。
@@ -50,7 +50,7 @@ ML serverのホームディレクトリの内容を閲覧・変更できます�
 `/etc/fstab` の最終行に以下を追加します。
 ```
 # nfs home directory
-10.249.254.52:/ML_home/[username] /mnt/ML_home/[username] nfs rw,sync 0 0
+10.249.254.52:/ML_home/[username] /media/[username]/ML_home/[username] nfs rw,sync 0 0
 ```
 
 ### リンクの追加
@@ -58,7 +58,7 @@ ML serverのホームディレクトリの内容を閲覧・変更できます�
 リンクを作成しておくと便利です。
 例えば
 ```
-ln -s /mnt/ML_home/[username] ~/ml_home
+ln -s /media/[username]/ML_home/[username] ~/ml_home
 ```
 とすると、ホームディレクトリ直下の`ml_home`からアクセスすることが可能になります。
 
@@ -66,7 +66,7 @@ ln -s /mnt/ML_home/[username] ~/ml_home
 ### 共有した homeディレクトリにローカルマシンからアクセスできるようにする
 先ほど作成した共有ディレクトリに、
 ```
-cd /mnt/ML_home/[username]
+cd /media/[username]/ML_home/[username]
 ```
 で移動すると、permission denied される場合がある。その場合、[ローカルマシンでのユーザIDの変更](./change_user_id.md)を行う。
 

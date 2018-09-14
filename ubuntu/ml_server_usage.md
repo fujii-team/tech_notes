@@ -76,7 +76,7 @@ cd /media/[username]/ML_home/[username]
 基本的には ssh でログインしてください。
 ユーザーアカウント・パスワードを伝えますので
 ```
-ssh [username]@10.249.254.54
+ssh [username]@10.249.254.55
 ```
 などでアクセスしてください。
 パスワードはログイン後に
@@ -139,7 +139,7 @@ c.NotebookApp.port = 2****
 最後に、`jupyter-notebook &`でJupyterを起動し、
 ローカルマシンのブラウザなどから
 ```
-http://10.249.254.54:/2****
+http://10.249.254.55:2****/
 ```
 でログインできます。
 あとはローカルのJupyter-notebookと使い方は同様です。
@@ -160,7 +160,7 @@ fg %1
 同様に各自のPCも操作できます。
 
 ```
-ssh -L 2****:10.249.254.54:2**** [ECS-ID/SPS-ID]@forward.kuins.kyoto-u.ac.jp
+ssh -L 2****:10.249.254.55:2**** [ECS-ID/SPS-ID]@forward.kuins.kyoto-u.ac.jp
 ```
 を実行して kuins にログインした後、
 ローカルのブラウザを用いて

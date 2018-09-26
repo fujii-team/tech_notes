@@ -3,7 +3,7 @@
 # 2017/3/12 更新
 最新の Firefox52.0esr では採用している NPAPI のサポートが打ち切られた。
 そのため、旧バージョンのFirefoxをインストールする必要がある。
-手順は(こちら)[NIFS/install_old_firefox.md]を参考にすること。
+手順は[こちら](NIFS/install_old_firefox.md)を参考にすること。
 
 ## 必要なもの
 + NIFSの OTP アカウント、OTPカード

@@ -31,12 +31,12 @@ pdfにフォントを埋め込まない場合、特に日本語の文書では�
 と表示される場合は、フォント埋め込みが設定されていない。
 
 その場合は  
-`kanji-config-updmap ipaex`  
+`kanji-config-updmap ipaex -user`  
 を実行することで、日本語フォントの埋め込み設定をOnにできる。
 
 `kanji-config-updmap status`  
 の結果が
-> CURRENT family : ipaex  
+> CURRENT family for ja: ipaex
 > Standby family : ipa
 
 となっていれば埋め込みの設定が完了している。
